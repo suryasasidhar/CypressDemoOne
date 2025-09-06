@@ -1,14 +1,18 @@
-# Run pipeline only when changes are pushed to main branch
+# Run pipeline automatically on main branch commits
 trigger:
   branches:
     include:
       - main
 
-# Optional: run pipeline for PRs into main
+# Run pipeline automatically for PRs into main
 pr:
   branches:
     include:
       - main
+
+# Allow manual runs from Azure DevOps
+resources:
+  pipelines: []
 
 pool:
   name: Default   # self-hosted agent
