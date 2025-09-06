@@ -1,0 +1,106 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-09-06T07:05:06.742Z",
+    "end": "2025-09-06T07:05:16.134Z",
+    "duration": 9392,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "bd42d803-28a3-48a7-ac95-966b979f5283",
+      "title": "",
+      "fullFile": "cypress\\e2e\\bptravelLogin.cy.js",
+      "file": "cypress\\e2e\\bptravelLogin.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "71050ad3-8081-410d-9a34-4ac1bbca63e6",
+          "title": "BP Travel Wesbite",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Bp Travel Login",
+              "fullTitle": "BP Travel Wesbite Bp Travel Login",
+              "timedOut": null,
+              "duration": 4924,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('https://bptravel.blueprism.com/');\ncy.get('#username').should('be.visible').click().type('admin');\ncy.get('#password').should('be.visible').click().type('admin');\ncy.get('span[onclick=\"login()\"]').click();\ncy.url().should('include', 'search.html');\ncy.contains('Log Out').click();",
+              "err": {},
+              "uuid": "aaebf994-6d49-46ce-a9df-9ab89f40c5be",
+              "parentUUID": "71050ad3-8081-410d-9a34-4ac1bbca63e6",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "aaebf994-6d49-46ce-a9df-9ab89f40c5be"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4924,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "cypress/reports/mochawesome",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
