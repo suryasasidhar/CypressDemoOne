@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="11.922" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-09-06T10:20:55" tests="0" file="cypress\e2e\bptravelLogin.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="BP Travel Wesbite" timestamp="2025-09-06T10:20:55" tests="1" time="11.886" failures="0">
+    <testcase name="BP Travel Wesbite Bp Travel Login" time="5.568" classname="Bp Travel Login">
+    </testcase>
+  </testsuite>
+</testsuites>
