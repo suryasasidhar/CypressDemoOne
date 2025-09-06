@@ -1,46 +1,48 @@
+# Run pipeline only when changes are pushed to main branch
 trigger:
-- main   # runs when you push to main branch (you can adjust this)
+  branches:
+    include:
+      - main
+
+# Optional: run pipeline for PRs into main
+pr:
+  branches:
+    include:
+      - main
 
 pool:
-  name: Default   # your self-hosted agent pool name
+  name: Default   # self-hosted agent
 
 steps:
-  # Install Node.js
   - task: NodeTool@0
     inputs:
       versionSpec: '18.x'
     displayName: 'Install Node.js'
 
-  # Install dependencies
   - script: npm install
     displayName: 'Install dependencies'
 
-  # Run Cypress with reporters (from package.json script)
   - script: npm run cypress:report
     displayName: 'Run Cypress tests with reporters'
 
-  # ✅ Publish JUnit test results to Test Results tab
   - task: PublishTestResults@2
     inputs:
       testResultsFiles: '**/cypress/reports/junit/test-results-*.xml'
       testRunTitle: 'Cypress Test Results'
     condition: succeededOrFailed()
 
-  # ✅ Publish Mochawesome HTML report as an artifact
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: 'cypress/reports/mochawesome'
       artifactName: 'MochawesomeReport'
     condition: always()
 
-  # ✅ Publish Cypress screenshots (if tests fail)
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: 'cypress/screenshots'
       artifactName: 'CypressScreenshots'
     condition: failed()
 
-  # ✅ Publish Cypress videos (if tests fail)
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: 'cypress/videos'
