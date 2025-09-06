@@ -38,38 +38,17 @@ steps:
   - script: mkdir -p cypress/reports/junit cypress/reports/mochawesome
     displayName: 'Create report folders'
 
-  # List folders to verify
-  - script: dir cypress\reports\junit
-    displayName: 'Verify JUnit folder exists'
-
   # Run Cypress tests with reporters
   - script: npm run cypress:report
     displayName: 'Run Cypress with Mochawesome + JUnit'
+
+  # List JUnit XMLs for verification
+  - script: dir cypress\reports\junit
+    displayName: 'List JUnit XML files on agent'
 
   # Publish JUnit results to Test Results tab
   - task: PublishTestResults@2
     inputs:
       testResultsFiles: 'cypress/reports/junit/*.xml'
       testRunTitle: 'Cypress Test Results'
-    condition: succeededOrFailed()
-
-  # Publish Mochawesome HTML report
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: 'cypress/reports/mochawesome'
-      artifactName: 'MochawesomeReport'
-    condition: always()
-
-  # Publish Cypress screenshots if tests fail
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: 'cypress/screenshots'
-      artifactName: 'CypressScreenshots'
-    condition: failed()
-
-  # Publish Cypress videos if tests fail
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: 'cypress/videos'
-      artifactName: 'CypressVideos'
-    condition: failed()
+    condition: succeededOrFai
