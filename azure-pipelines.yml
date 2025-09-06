@@ -1,52 +1,73 @@
-# Run pipeline automatically on main branch commits
+# Pipeline triggers
 trigger:
   branches:
     include:
       - main
 
-# Run pipeline automatically for PRs into main
 pr:
   branches:
     include:
       - main
 
-# Allow manual runs from Azure DevOps
+# Allow manual run
 resources:
   pipelines: []
 
+# Self-hosted agent pool
 pool:
-  name: Default   # self-hosted agent
+  name: Default
+
+# Variables (can override in pipeline UI)
+variables:
+  CYPRESS_BASE_URL: "https://test.myapp.com"
+  ENVIRONMENT: "QA"
+  BROWSER: "chrome"
 
 steps:
+  # Install Node.js
   - task: NodeTool@0
     inputs:
       versionSpec: '18.x'
     displayName: 'Install Node.js'
 
+  # Install npm dependencies
   - script: npm install
     displayName: 'Install dependencies'
 
-  - script: npm run cypress:report
-    displayName: 'Run Cypress tests with reporters'
+  # Create folders for Cypress reports
+  - script: mkdir -p cypress/reports/junit cypress/reports/mochawesome
+    displayName: 'Create report folders'
 
+  # List folders to verify
+  - script: dir cypress\reports\junit
+    displayName: 'Verify JUnit folder exists'
+
+  # Run Cypress tests with reporters
+  - script: npm run cypress:report
+    displayName: 'Run Cypress with Mochawesome + JUnit'
+
+  # Publish JUnit results to Test Results tab
   - task: PublishTestResults@2
     inputs:
-      testResultsFiles: '**/cypress/reports/junit/test-results-*.xml'
+      testResultsFiles: 'cypress/reports/junit/*.xml'
       testRunTitle: 'Cypress Test Results'
     condition: succeededOrFailed()
 
+  # Publish Mochawesome HTML report
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: 'cypress/reports/mochawesome'
       artifactName: 'MochawesomeReport'
     condition: always()
 
+  # Publish Cypress screenshots if tests fail
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: 'cypress/screenshots'
       artifactName: 'CypressScreenshots'
     condition: failed()
 
+  # Publish Cypress videos if tests fail
   - task: PublishBuildArtifacts@1
     inputs:
       pathToPublish: 'cypress/videos'

@@ -5,6 +5,7 @@ describe('BP Travel Wesbite', () => {
     cy.get('#password').should('be.visible').click().type('admin');
     cy.get('span[onclick="login()"]').click();
     cy.url().should('include','search.html');
+    
     cy.contains('Log Out').click();
   })
 })
